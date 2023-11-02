@@ -15,6 +15,8 @@ import {
   Thead,
   Tr,
 } from "@chakra-ui/react";
+import Student from "./SListItem";
+import SList from "./SList";
 export interface student {
   first_name: string;
   last_name: string;
@@ -29,7 +31,7 @@ interface resp {
 }
 function SchuelerListe() {
   const { jahr } = useParams();
-  const [students, setStudents] = useState<student[]>();
+  const [students, setStudents] = useState<student[] | undefined>();
   const [show, setShow] = useState(false);
   const [load, setLoad] = useState(false);
 
@@ -73,53 +75,17 @@ function SchuelerListe() {
   return (
     <>
       {!load && !show && <CSVInput onSubmit={handleSubmit} />}
-      {!load && show && (
-        <TableContainer width={"90%"}>
-          <Table variant="simple">
-            <Tr>
-              <Th width={300}>Name</Th>
-              <Th width={300}>Nachname</Th>
-              <Th width={300}>Geschlecht</Th>
-              <Th width={400}>Email </Th>
-              <Th>Vater's Name</Th>
-            </Tr>
-          </Table>
-          <Box overflow={"auto"} height={"70vh"}>
-            <Table variant="simple">
-              <TableCaption>Islamisches Zentrum Regensburg</TableCaption>
-              <Tbody>
-                {students?.map((std) => (
-                  <Tr
-                  // onMouseOver={() => setVisible(true)}
-                  // onMouseLeave={() => setVisible(false)}
-                  >
-                    <Td width={300}>{std.first_name}</Td>
-                    <Td width={300}>{std.last_name}</Td>
-                    <Td width={300}>{std.gender}</Td>
-                    <Td width={400}>{std.email}</Td>
-                    <Td>{std.father}</Td>
-                    {/* <Td>
-                    <Button
-                      size={"sm"}
-                      opacity={visible ? 1 : 0}
-                      onClick={() => handleDelete(user)}
-                    >
-                      Löschen
-                    </Button>
-                  </Td> */}
-                  </Tr>
-                ))}
-              </Tbody>
-            </Table>
-          </Box>
-        </TableContainer>
-      )}
-      {load && (
-        <ReactLoading
-          type={"bubbles"}
-          color={"blue"}
-          height={"20%"}
-          width={"20%"}
+      {!load && show && students && (
+        <SList
+          data_type="schüler"
+          data={students}
+          heading_data={[
+            students[0].first_name,
+            students[0].last_name,
+            students[0].gender,
+            students[0].email,
+            students[0].father,
+          ]}
         />
       )}
     </>

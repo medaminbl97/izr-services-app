@@ -7,6 +7,7 @@ interface props {
   onClick: () => void;
   isLoading?: boolean;
   isDisabled?: boolean;
+  size?: string;
 }
 
 function IZRButton({
@@ -14,6 +15,7 @@ function IZRButton({
   onClick,
   isDisabled = false,
   isLoading = false,
+  size,
 }: props) {
   return (
     <Button
@@ -24,6 +26,8 @@ function IZRButton({
       isLoading={isLoading}
       loadingText={"Bearbeitung läuft..."}
       isDisabled={isDisabled}
+      size={size}
+      transition={"ease .2s"}
     >
       {title}
     </Button>
